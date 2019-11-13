@@ -1,17 +1,17 @@
 library(data.table)
 
-activity_labels <- read.delim('data/activity_labels.txt', header=FALSE, sep=' ')
+activity_labels <- read.delim('activity_labels.txt', header=FALSE, sep=' ')
 names(activity_labels) <- c('activity_id', 'activity_name')
 
-features <- read.delim('data/features.txt', header=FALSE, sep=' ')
+features <- read.delim('features.txt', header=FALSE, sep=' ')
 names(features) <- c('feature_id', 'feature_name')
 
 read_data_set <- function(type) {
-  x <- read.fwf(paste('data/', type, '/X_', type, '.txt', sep=''), rep(16, 561), header=FALSE)
+  x <- read.fwf(paste(type, '/X_', type, '.txt', sep=''), rep(16, 561), header=FALSE)
   names(x) <- features$feature_name
-  y <- read.delim(paste('data/', type, '/y_', type, '.txt', sep=''), header=FALSE)
+  y <- read.delim(paste(type, '/y_', type, '.txt', sep=''), header=FALSE)
   names(y) <- c('activity_id')
-  subjects <- read.delim(paste('data/', type, '/subject_', type, '.txt', sep=''), head=FALSE, col.names=c('subject_id'))
+  subjects <- read.delim(paste(type, '/subject_', type, '.txt', sep=''), head=FALSE, col.names=c('subject_id'))
   x <- cbind(x, subjects)
   x <- cbind(x, merge(y, activity_labels, by='activity_id')[, 2])
   names(x)[563] <- 'activity_name'
