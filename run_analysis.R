@@ -26,5 +26,4 @@ data_set <- data_set[, columns]
 names(data_set) <- gsub('\\(\\)', '', names(data_set))
 names(data_set) <- gsub('-', '_', names(data_set))
 data_set_mean <- data.table(data_set)[,lapply(.SD, mean), by='activity_name,subject_id', .SDcols=1:47]
-
-
+write.table(data_set_mean, file='data_set_mean.txt', col.names=FALSE)
